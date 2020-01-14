@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "~=5.3.2"
+pylint = "~=2.4.4"
+requests = "~=2.22.0"
+ipykernel = "*"
+
+[packages]
+beautifulsoup4 = "~=4.4.0"
+pytest = "*"
+
+[requires]
+python_version = "3.6"
