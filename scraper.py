@@ -119,7 +119,7 @@ class MangaScraper:
         return BeautifulSoup(markup, parser)
 
     @staticmethod
-    def get_mangas(soup, url_selector, image_url_selector, title_selector):
+    def get_mangas(soup, url_selector, image_url_selector, title_selector, image_pattern=None):
         url_tags = soup.select(url_selector)
         image_url_tags = soup.select(image_url_selector)
         title_tags = soup.select(title_selector)
@@ -127,8 +127,14 @@ class MangaScraper:
         mangas = []
         for i in range(len(url_tags)):
             url = url_tags[i]["href"]
-            image_url = image_url_tags[i]["src"]
             title = title_tags[i].text.strip()
+
+            if image_pattern is not None:
+                image_url = str(image_url_tags[i])
+                match = re.search(image_pattern, image_url)
+                image_url = match.groups()[0]
+            else:
+                image_url = image_url_tags[i]["src"]
 
             manga = Manga(url, image_url, title)
             mangas.append(manga)
@@ -139,9 +145,19 @@ class MangaScraper:
         soup = self.parse(markup)
 
         murl = soup.select(self.selectors[Selector.MANGA_URL])[0]["href"]
-        mimage_url = soup.select(self.selectors[Selector.MANGA_IMAGE_URL])[0]["src"]
         mtitle = soup.select(self.selectors[Selector.MANGA_TITLE])[0].text.strip()
         mdescription = soup.select(self.selectors[Selector.MANGA_DESCRIPTION])[0].text
+        mimage_url_tag = soup.select(self.selectors[Selector.MANGA_IMAGE_URL])[0]
+
+        if mimage_url_tag.name == "a":
+            match = re.search(PATTERNS[self.source][Pattern.MANGA_IMAGE_URL], str(mimage_url_tag))
+            mimage_url = match.groups()[0]
+            if self.source not in mimage_url:
+                if not mimage_url[0] == '/':
+                    mimage_url = '/' + mimage_url
+                mimage_url = self.source + mimage_url
+        else:
+            mimage_url = soup.select(self.selectors[Selector.MANGA_IMAGE_URL])[0]["src"]
 
         chapters = []
         chapter_url_tags = soup.select(self.selectors[Selector.CHAPTER_URL])
@@ -149,7 +165,8 @@ class MangaScraper:
         for i in range(len(chapter_url_tags)):
             curl = chapter_url_tags[i]["href"]
             ctitle = chapter_title_tags[i].text.strip()
-            cuid = re.search(self.patterns[Pattern.CHAPTER_UID], ctitle)
+            match = re.search(self.patterns[Pattern.CHAPTER_UID], ctitle)
+            cuid = match.groups()[0]
 
             chapter = Chapter(cuid, curl, ctitle)
             chapters.append(chapter)
@@ -189,21 +206,27 @@ class MangaScraper:
         def get_latest_mangas(self, markup):
             soup = self.parent.parse(markup)
 
+            image_pattern = self.parent.patterns[Pattern.MANGA_IMAGE_URL] if self.parent.source in PATTERNS else None
+
             return self.parent.get_mangas(
                 soup, 
                 self.parent.selectors[Selector.HOME_LATEST_URL],
                 self.parent.selectors[Selector.HOME_LATEST_IMAGE_URL],
-                self.parent.selectors[Selector.HOME_LATEST_TITLE]
+                self.parent.selectors[Selector.HOME_LATEST_TITLE],
+                image_pattern,
             )
 
         def get_popular_mangas(self, markup):
             soup = self.parent.parse(markup)
 
+            image_pattern = self.parent.patterns[Pattern.MANGA_IMAGE_URL] if self.parent.source in PATTERNS else None
+
             return self.parent.get_mangas(
                 soup, 
                 self.parent.selectors[Selector.HOME_POPULAR_URL],
                 self.parent.selectors[Selector.HOME_POPULAR_IMAGE_URL],
-                self.parent.selectors[Selector.HOME_POPULAR_TITLE]
+                self.parent.selectors[Selector.HOME_POPULAR_TITLE],
+                image_pattern
             )
 
     class Search:
@@ -214,9 +237,12 @@ class MangaScraper:
         def get_searched_mangas(self, markup):
             soup = self.parent.parse(markup)
 
+            image_pattern = self.parent.patterns[Pattern.MANGA_IMAGE_URL] if self.parent.source in PATTERNS else None
+
             return self.parent.get_mangas(
                 soup,
                 self.parent.selectors[Selector.SEARCHED_URL],
                 self.parent.selectors[Selector.SEARCHED_IMAGE_URL],
                 self.parent.selectors[Selector.SEARCHED_TITLE],
+                image_pattern
             )

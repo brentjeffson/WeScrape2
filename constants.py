@@ -27,7 +27,8 @@ class Selector:
 
 
 class Pattern:
-    CHAPTER_UID = 0
+    MANGA_IMAGE_URL = 0
+    CHAPTER_UID = 1
 
 APIS = {
     Source.MANGAKAKALOT: "search",
@@ -36,6 +37,10 @@ APIS = {
 
 PATTERNS = {
     Source.MANGAKAKALOT: {
+        Pattern.CHAPTER_UID: r".+[\s\\-_]{1}([0-9a-zA-Z.]+)",
+    },
+    Source.LEVIATANSCANS: {
+        Pattern.MANGA_IMAGE_URL: r"\((.+)\)",
         Pattern.CHAPTER_UID: r".+[\s\\-_]{1}([0-9a-zA-Z.]+)",
     },
 }
@@ -63,9 +68,18 @@ SELECTORS = {
         Selector.MANGA_URL: "a.media-content",
         Selector.MANGA_IMAGE_URL: "a.media-content",
         Selector.MANGA_TITLE: "div.d-flex > div.heading > h5",
-        Selector.MANGA_DESCRIPTION: "div.row > div:nth-child(2)",
-        Selector.CHAPTER_URL: "div.list div.flex > a:first-child",
+        Selector.MANGA_DESCRIPTION: "div.row > div:nth-of-type(2)",
+        Selector.CHAPTER_URL: "div.list div.flex > a:nth-of-type(1)",
+        Selector.CHAPTER_TITLE: "div.list div.flex > a:nth-of-type(1)",
         Selector.CHAPTER_IMAGES: "div.vung-doc img",
         Selector.SEARCHED_URL: "div.media.media-comic-card + div.list-content a.list-title",
+        Selector.SEARCHED_IMAGE_URL: "div.media.media-comic-card > a",
+        Selector.SEARCHED_TITLE: "div.list-content > div.list-body > a",
+        Selector.HOME_LATEST_URL: "div.list-body > a",
+        Selector.HOME_LATEST_IMAGE_URL: "div.media.media-comic-card > a",
+        Selector.HOME_LATEST_TITLE: "div.list-body > a",
+        Selector.HOME_POPULAR_URL: "div.list-body > a",
+        Selector.HOME_POPULAR_IMAGE_URL: "div.media.media-comic-card > a",
+        Selector.HOME_POPULAR_TITLE: "div.list-body > a",
     },
 }
