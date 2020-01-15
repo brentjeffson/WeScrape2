@@ -145,7 +145,7 @@ class MangaScraper:
         return manga_parser(soup, selectors, patterns, source, "search")
 
     @staticmethod
-    def parse(markup, parser="html.parser"):
+    def parse(markup, parser="html5lib"):
         return BeautifulSoup(markup, parser)
 
     @staticmethod

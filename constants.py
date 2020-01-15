@@ -49,7 +49,7 @@ PATTERNS = {
         Pattern.CHAPTER_UID: r".+[\s\-_]{1}([0-9a-zA-Z.]+)",
     },
     Source.MANGANELO: {
-        Pattern.CHAPTER_UID: r"[\s\-:]*([0-9.]+)[\s\-:]",
+        Pattern.CHAPTER_UID: r"[\s\-:]*([0-9.]+)[\s\-:]*",
     },
 }
 
@@ -70,12 +70,12 @@ SELECTORS = {
         Selector.SEARCHED_URL: "div.search-story-item > a",
         Selector.SEARCHED_IMAGE_URL: "div.search-story-item img.img-loading",
         Selector.SEARCHED_TITLE: "div.search-story-item > div.item-right >  h3 > a",
-        Selector.HOME_LATEST_URL: "div.content-homepage-item >div.content-homepage-item-right a",
+        Selector.HOME_LATEST_URL: "div.content-homepage-item > div.content-homepage-item-right h3 > a",
         Selector.HOME_LATEST_IMAGE_URL: "div.content-homepage-item a > img.img-loading",
-        Selector.HOME_LATEST_TITLE: "div.content-homepage-item >div.content-homepage-item-right a",
-        Selector.HOME_POPULAR_URL: "div.item > div.slide-caption > h3 > a",
+        Selector.HOME_LATEST_TITLE: "div.content-homepage-item > div.content-homepage-item-right h3 > a",
+        Selector.HOME_POPULAR_URL: "div > div.item > div > h3 > a",
         Selector.HOME_POPULAR_IMAGE_URL: "div.item > img.img-loading",
-        Selector.HOME_POPULAR_TITLE: "div.item > div.slide-caption > h3 > a",
+        Selector.HOME_POPULAR_TITLE: "div > div.item > div > h3 > a",
     },
     Source.MANGAKAKALOT: {
         Selector.MANGA_URL: "link[rel=\"alternate\"]",

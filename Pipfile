@@ -10,6 +10,7 @@ pylint = "*"
 beautifulsoup4 = "*"
 pytest = "*"
 requests = "*"
+html5lib = "*"
 
 [requires]
 python_version = "3.6"
