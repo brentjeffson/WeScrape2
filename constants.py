@@ -1,7 +1,7 @@
 class Source:
-    MANGAKAKALOT = 'https://mangakakalot.com/'
-    LEVIATANSCANS = 'https://leviatanscans.com/'
-
+    MANGAKAKALOT = 'https://mangakakalot.com'
+    LEVIATANSCANS = 'https://leviatanscans.com'
+    MANGANELO = "https://manganelo.com"
 
 class Selector:
     MANGA_URL = 0
@@ -31,8 +31,9 @@ class Pattern:
     CHAPTER_UID = 1
 
 APIS = {
-    Source.MANGAKAKALOT: "search/",
-    Source.LEVIATANSCANS: "comics/",
+    Source.MANGAKAKALOT: "/search",
+    Source.LEVIATANSCANS: "/comics",
+    Source.MANGANELO: "/search",
 }
 
 REQUIRED_PARAMETERS = {
@@ -47,13 +48,35 @@ PATTERNS = {
         Pattern.MANGA_IMAGE_URL: r"\((.+)\)",
         Pattern.CHAPTER_UID: r".+[\s\-_]{1}([0-9a-zA-Z.]+)",
     },
+    Source.MANGANELO: {
+        Pattern.CHAPTER_UID: r"[\s\-:]*([0-9.]+)[\s\-:]",
+    },
 }
 
 KEYWORD_REPLACEMENT = {
-    Source.MANGAKAKALOT: "_"
+    Source.MANGAKAKALOT: "_",
+    Source.MANGANELO: "_",
 }
 
 SELECTORS = {
+    Source.MANGANELO: {
+        Selector.MANGA_URL: "div.panel-breadcrumb > a:last-child",
+        Selector.MANGA_IMAGE_URL: "div.story-info-left img",
+        Selector.MANGA_TITLE: "div.story-info-right > h1",
+        Selector.MANGA_DESCRIPTION: "div.panel-story-info-description",
+        Selector.CHAPTER_URL: "ul.row-content-chapter > li > a",
+        Selector.CHAPTER_TITLE: "ul.row-content-chapter > li > a",
+        Selector.CHAPTER_IMAGES: "div.container-chapter-reader img",
+        Selector.SEARCHED_URL: "div.search-story-item > a",
+        Selector.SEARCHED_IMAGE_URL: "div.search-story-item img.img-loading",
+        Selector.SEARCHED_TITLE: "div.search-story-item > div.item-right >  h3 > a",
+        Selector.HOME_LATEST_URL: "div.content-homepage-item >div.content-homepage-item-right a",
+        Selector.HOME_LATEST_IMAGE_URL: "div.content-homepage-item a > img.img-loading",
+        Selector.HOME_LATEST_TITLE: "div.content-homepage-item >div.content-homepage-item-right a",
+        Selector.HOME_POPULAR_URL: "div.item > div.slide-caption > h3 > a",
+        Selector.HOME_POPULAR_IMAGE_URL: "div.item > img.img-loading",
+        Selector.HOME_POPULAR_TITLE: "div.item > div.slide-caption > h3 > a",
+    },
     Source.MANGAKAKALOT: {
         Selector.MANGA_URL: "link[rel=\"alternate\"]",
         Selector.MANGA_IMAGE_URL: "div.manga-info-pic > img",

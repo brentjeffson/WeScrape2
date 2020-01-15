@@ -135,7 +135,7 @@ class MangaScraper:
             }
             resp = requests.get(api, params=params, headers=headers)
         else:
-            api = api + keyword
+            api = api + "/" + keyword
             resp = requests.get(api, headers=headers)
         
         if not resp.ok:
@@ -180,6 +180,9 @@ class MangaScraper:
         for i in range(len(url_tags)):
             url = url_tags[i]["href"]
             title = title_tags[i].text.strip()
+
+            if source not in url:
+                continue
 
             if image_url_tags[i].name == "a":
                 match = re.search(patterns[Pattern.MANGA_IMAGE_URL], str(image_url_tags[i]))
