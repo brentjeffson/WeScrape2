@@ -1,6 +1,7 @@
-from constants import SELECTORS, Selector, PATTERNS, Pattern
+from constants import SELECTORS, Selector, PATTERNS, Pattern, REQUIRED_PARAMETERS, APIS
 from bs4 import BeautifulSoup
 import re
+import requests
 
 class Chapter:
     
@@ -112,6 +113,24 @@ class MangaScraper:
         self._patterns = PATTERNS[self.source]
         self._markup = ""
 
+    def search_online(self, keyword, source, headers=None):
+        api = f"{source}{APIS[source]}"
+        if source in REQUIRED_PARAMETERS:
+            parameters = REQUIRED_PARAMETERS[source]
+            params = {
+                parameters["keyword"]: keyword
+            }
+            resp = requests.get(api, params=params, headers=headers)
+        else:
+            api = api + keyword
+            resp = requests.get(api, headers=headers)
+        
+        if not resp.ok:
+            return None
+        
+        self.markup = resp.text
+        return self.search
+
     @staticmethod
     def parse(markup, parser="html.parser"):
         return BeautifulSoup(markup, parser)
@@ -192,10 +211,11 @@ class MangaScraper:
             cuid = match.groups()[0]
 
             chapter = Chapter(cuid, curl, ctitle)
+            print(chapter)
             chapters.append(chapter)
 
         info = Info(description=mdescription)
-        return Manga(murl, mimage_url, mtitle, chapters=chapters, info=info)
+        return Manga(murl, mimage_url, mtitle, chapters=chapters, info=info)        
 
     @property
     def manga(self):

@@ -8,7 +8,7 @@ RESOURCE_PATH = path.join(path.dirname(__file__), "res")
 
 class TestFunctions:
 
-    def test_get_popular_mangas(self):
+    def test_mangakakalot_popular(self):
         markup = Path(path.join(RESOURCE_PATH, "manga_home.html")).read_text(encoding="utf-8")
 
         scraper = MangaScraper(Source.MANGAKAKALOT)
@@ -16,8 +16,14 @@ class TestFunctions:
         mangas = scraper.popular
         print(len(mangas))
 
+    def test_mangakakalot_manga(self):
+        markup = Path(path.join(RESOURCE_PATH, "manga_item.html")).read_text(encoding="utf-8")
 
-    def test_leviatanscans_get_manga(self):
+        scraper = MangaScraper(Source.MANGAKAKALOT)
+        scraper.markup = markup
+        mangas = scraper.manga
+
+    def test_leviatanscans_manga(self):
         markup = Path(path.join(RESOURCE_PATH, "leviatanscans_item.html")).read_text(encoding="utf-8")
 
         scraper = MangaScraper(Source.LEVIATANSCANS)
@@ -27,7 +33,7 @@ class TestFunctions:
             print(chapter)
 
 
-    def test_leviatanscans_search_get_manga(self):
+    def test_leviatanscans_search(self):
         markup = Path(path.join(RESOURCE_PATH, "leviatanscans_search.html")).read_text(encoding="utf-8")
 
         scraper = MangaScraper(Source.LEVIATANSCANS)
@@ -37,7 +43,7 @@ class TestFunctions:
             print(manga)
 
 
-    def test_leviatanscans_home_latest_manga(self):
+    def test_leviatanscans_latest(self):
         markup = Path(path.join(RESOURCE_PATH, "leviatanscans_home.html")).read_text(encoding="utf-8")
 
         scraper = MangaScraper(Source.LEVIATANSCANS)
@@ -48,6 +54,4 @@ class TestFunctions:
 
 
 if __name__ == "__main__":
-    TestFunctions().test_leviatanscans_home_latest_manga()
-
-
+    TestFunctions().test_mangakakalot_manga()

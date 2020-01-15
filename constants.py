@@ -31,17 +31,21 @@ class Pattern:
     CHAPTER_UID = 1
 
 APIS = {
-    Source.MANGAKAKALOT: "search",
-    Source.LEVIATANSCANS: "search",
+    Source.MANGAKAKALOT: "search/",
+    Source.LEVIATANSCANS: "search/",
+}
+
+REQUIRED_PARAMETERS = {
+    Source.LEVIATANSCANS: {"author": "a", "keyword": "q"}
 }
 
 PATTERNS = {
     Source.MANGAKAKALOT: {
-        Pattern.CHAPTER_UID: r".+[\s\\-_]{1}([0-9a-zA-Z.]+)",
+        Pattern.CHAPTER_UID: r".+[\s\-_]{1}([0-9a-zA-Z.]+)",
     },
     Source.LEVIATANSCANS: {
         Pattern.MANGA_IMAGE_URL: r"\((.+)\)",
-        Pattern.CHAPTER_UID: r".+[\s\\-_]{1}([0-9a-zA-Z.]+)",
+        Pattern.CHAPTER_UID: r".+[\s\-_]{1}([0-9a-zA-Z.]+)",
     },
 }
 
