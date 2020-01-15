@@ -2,7 +2,6 @@ from constants import SELECTORS, Selector, PATTERNS, Pattern
 from bs4 import BeautifulSoup
 import re
 
-
 class Chapter:
     
     def __init__(self, uid, url, title, images=None):
