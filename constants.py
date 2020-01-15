@@ -32,11 +32,11 @@ class Pattern:
 
 APIS = {
     Source.MANGAKAKALOT: "search/",
-    Source.LEVIATANSCANS: "search/",
+    Source.LEVIATANSCANS: "comics/",
 }
 
 REQUIRED_PARAMETERS = {
-    Source.LEVIATANSCANS: {"author": "a", "keyword": "q"}
+    Source.LEVIATANSCANS: {"author": "a", "keyword": "query"}
 }
 
 PATTERNS = {
@@ -47,6 +47,10 @@ PATTERNS = {
         Pattern.MANGA_IMAGE_URL: r"\((.+)\)",
         Pattern.CHAPTER_UID: r".+[\s\-_]{1}([0-9a-zA-Z.]+)",
     },
+}
+
+KEYWORD_REPLACEMENT = {
+    Source.MANGAKAKALOT: "_"
 }
 
 SELECTORS = {
