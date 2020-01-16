@@ -11,6 +11,8 @@ beautifulsoup4 = "*"
 pytest = "*"
 requests = "*"
 html5lib = "*"
+setuptools = "*"
+wheel = "*"
 
 [requires]
 python_version = "3.6"

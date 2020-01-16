@@ -1,0 +1,12 @@
+README.md
+setup.py
+WebScrape2.egg-info/PKG-INFO
+WebScrape2.egg-info/SOURCES.txt
+WebScrape2.egg-info/dependency_links.txt
+WebScrape2.egg-info/top_level.txt
+tests/__init__.py
+tests/test_manganelo.py
+tests/test_scraper_functions.py
+webscrape2/__init__.py
+webscrape2/constants.py
+webscrape2/scraper.py
