@@ -1,4 +1,4 @@
-from constants import SELECTORS, Selector, PATTERNS, Pattern, REQUIRED_PARAMETERS, APIS, KEYWORD_REPLACEMENT
+from webscrape2.constants import SELECTORS, Selector, PATTERNS, Pattern, REQUIRED_PARAMETERS, APIS, KEYWORD_REPLACEMENT
 from bs4 import BeautifulSoup
 import re
 import requests

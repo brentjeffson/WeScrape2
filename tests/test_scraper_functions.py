@@ -1,10 +1,10 @@
 from pathlib import Path
 from os import path
 
-from constants import Source
-from scraper import MangaScraper
+from webscrape2.constants import Source
+from webscrape2.scraper import MangaScraper
 
-RESOURCE_PATH = path.join(path.dirname(__file__), "res")
+RESOURCE_PATH = path.join(path.dirname(__file__), "../res")
 
 class TestFunctions:
 
